@@ -69,7 +69,7 @@ app.put('/api/users/:id', async (request, response) => {
 
 // DELETE
 app.delete('/api/users/:id', async (request, response) => {
-    const database =  client.db(DB_NAME);
+    const database = client.db(DB_NAME);
     const collection = database.collection(COLLECTION);
 
     const { id } = request.params
@@ -78,5 +78,5 @@ app.delete('/api/users/:id', async (request, response) => {
 })
 
 
-app.listen(PORT, () => console.log(`Servidor web iniciado en puerto ${PORT}`))
+app.listen(PORT, () => console.log(`OK: ${PORT}`))
 
