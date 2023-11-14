@@ -85,3 +85,24 @@ content-type: application/json
     "nombre": "Toni", 
     "edad": 30 
 }
+###
+POST https://api-mongodb-dev-pjrh.3.us-1.fl0.io/api/productos HTTP/1.1
+content-type: application/json
+{ 
+    "nombre": "Lavadora", 
+    "edad": 24 
+}
+###
+POST https://api-mongodb-dev-pjrh.3.us-1.fl0.io/api/users HTTP/1.1
+content-type: application/json
+{ 
+    "nombre": "Secadora", 
+    "edad": 30 
+}
+###
+POST https://api-mongodb-dev-pjrh.3.us-1.fl0.io/api/users HTTP/1.1
+content-type: application/json
+{ 
+    "nombre": "Mesa", 
+    "edad": 30 
+}

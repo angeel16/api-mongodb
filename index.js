@@ -9,6 +9,7 @@ const PORT = process.env.PORT ?? 3000
 const DB_URL = process.env.MONGODB_URI ?? 'mongodb://localhost:27017'
 const DB_NAME = process.env.DB_NAME ?? 'api'
 const COLLECTION = 'users'
+const COLLECTION2 = 'productos'
 
 const client = new MongoClient(DB_URL)
 
@@ -77,6 +78,70 @@ app.delete('/api/users/:id', async (request, response) => {
     response.status(200).json(results)
 })
 
+app.get("/", (request, response) => {
+    response.redirect("/api/productos")
+})
 
-app.listen(PORT, () => console.log(`Ok : ${PORT}`))
+
+// GET
+app.get('/api/productos', async (request, response) => {
+    const database = client.db(DB_NAME);
+    const collection2 = database.collection2(COLLECTION2);
+
+    const results = await collection2.find({}).toArray()
+
+    response.status(200).json(results)
+})
+
+// POST 
+app.post('/api/productos', async (request, response) => {
+    if (!request.is('json'))
+        return response.json({ message: 'Debes proporcionar datos JSON' })
+
+    const database = client.db(DB_NAME);
+    const collection2 = database.collection2(COLLECTION2);
+
+    const { nombre, precio } = request.body
+    const results = await collection2.insertOne({ nombre, precio });
+
+    return response.status(200).json(results)
+})
+
+// GET 
+app.get('/api/productos/:id', async (request, response) => {
+    const database = client.db(DB_NAME);
+    const collection2 = database.collection2(COLLECTION2);
+
+    const { id } = request.params
+    const results = await collection2.find({ _id: new ObjectId(id) }).toArray()
+
+    response.status(200).json(results)
+})
+
+// PUT
+app.put('/api/productos/:id', async (request, response) => {
+    if (!request.is('json'))
+        return response.json({ message: 'Debes proporcionar datos JSON' })
+
+    const database = client.db(DB_NAME);
+    const collection2 = database.collection2(COLLECTION2);
+
+    const { id } = request.params
+    const { nombre, precio } = request.body
+    const results = await collection2.updateOne({ _id: new ObjectId(id) }, { $set: { nombre, precio } });
+
+    response.status(200).json(results)
+})
+
+// DELETE
+app.delete('/api/productos/:id', async (request, response) => {
+    const database = client.db(DB_NAME);
+    const collection2 = database.collection2(COLLECTION2);
+
+    const { id } = request.params
+    const results = await collection2.deleteOne({ _id: new ObjectId(id) })
+    response.status(200).json(results)
+})
+
+app.listen(PORT, () => console.log(`Ok git: ${PORT}`))
 
